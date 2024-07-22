@@ -1,16 +1,32 @@
-# e_quran
+e_quran
+A Flutter application for the E-Quran project.
 
-A new Flutter project.
+Summary
+This app is designed to showcase the features of the E-Quran API, as part of the IT Mobile Developer Test for Mega Finance.
 
-## Getting Started
+Features
+List of Surat Page: Displays a list of Surahs from the Quran.
+Surat Detail Page: Provides detailed information about each Surah, including Ayat details and audio playback.
+Tafsir: Displays Tafsir (interpretation) for each Ayat.
+Getting Started
+To get started with this Flutter project:
 
-This project is a starting point for a Flutter application.
+Clone the repository:
 
-A few resources to get you started if this is your first Flutter project:
+sh
+Copy code
+git clone <repository_url>
+Install dependencies:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+sh
+Copy code
+flutter pub get
+Run the application:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+sh
+Copy code
+flutter run
+For more information on Flutter development, refer to the official documentation.
+
+Author
+Ngurah Prafipta Surya Mandala
