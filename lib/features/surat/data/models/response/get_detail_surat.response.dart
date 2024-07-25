@@ -5,15 +5,12 @@ part 'get_detail_surat.response.g.dart';
 class GetDetailSuratResponse {
   int? nomor;
   String? nama;
-  @JsonKey(name: 'nama_latin')
   String? namaLatin;
-  @JsonKey(name: 'jumlah_ayat')
   int? jumlahAyat;
-  @JsonKey(name: 'tempat_turun')
   String? tempatTurun;
   String? arti;
   String? deskripsi;
-  String? audio;
+  AudioResponse? audioFull;
   bool? status;
   List<AyatResponse>? ayat;
 
@@ -25,7 +22,7 @@ class GetDetailSuratResponse {
       this.tempatTurun,
       this.arti,
       this.deskripsi,
-      this.audio,
+      this.audioFull,
       this.status,
       this.ayat});
 
@@ -38,25 +35,44 @@ class GetDetailSuratResponse {
 
 @JsonSerializable()
 class AyatResponse {
-  int? id;
-  int? surah;
-  int? nomor;
-  String? ar;
-  String? tr;
-  String? idn;
+  int? nomorAyat;
+  String? teksArab;
+  String? teksLatin;
+  String? teksIndonesia;
+  AudioResponse? audio;
 
-  AyatResponse({
-    this.id,
-    this.surah,
-    this.nomor,
-    this.ar,
-    this.tr,
-    this.idn,
-  });
+  AyatResponse(
+      {this.nomorAyat,
+      this.teksArab,
+      this.teksLatin,
+      this.teksIndonesia,
+      this.audio});
 
   factory AyatResponse.fromJson(Map<String, dynamic> json) {
     return _$AyatResponseFromJson(json);
   }
 
   Map<String, dynamic> toJson() => _$AyatResponseToJson(this);
+}
+
+@JsonSerializable()
+class AudioResponse {
+  @JsonKey(name: '01')
+  String? no1;
+  @JsonKey(name: '02')
+  String? no2;
+  @JsonKey(name: '03')
+  String? no3;
+  @JsonKey(name: '04')
+  String? no4;
+  @JsonKey(name: '05')
+  String? no5;
+
+  AudioResponse({this.no1, this.no2, this.no3, this.no4, this.no5});
+
+  factory AudioResponse.fromJson(Map<String, dynamic> json) {
+    return _$AudioResponseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() => _$AudioResponseToJson(this);
 }

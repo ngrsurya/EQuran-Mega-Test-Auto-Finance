@@ -79,8 +79,7 @@ class HomeView extends StatelessWidget {
                           const SizedBox(height: 15),
                           Expanded(
                               child: ListView(
-                            children: homeController
-                                    .daftarSuratData!.value.data.isNotEmpty
+                            children: homeController.daftarSuratData != null
                                 ? homeController.daftarSuratData!.value.data
                                     .map((e) => cardWidget(
                                         size,

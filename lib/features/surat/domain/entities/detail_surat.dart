@@ -8,7 +8,7 @@ class DetailSuratInfo extends Equatable {
   final String tempatTurun;
   final String arti;
   final String deskripsi;
-  final String audio;
+  final AudioInfo audioFull;
   final bool status;
   final List<AyatInfo> ayat;
 
@@ -20,7 +20,7 @@ class DetailSuratInfo extends Equatable {
       required this.tempatTurun,
       required this.arti,
       required this.deskripsi,
-      required this.audio,
+      required this.audioFull,
       required this.status,
       required this.ayat});
 
@@ -33,7 +33,7 @@ class DetailSuratInfo extends Equatable {
         tempatTurun,
         arti,
         deskripsi,
-        audio,
+        audioFull,
         status,
         ayat
       ];
@@ -46,7 +46,7 @@ class DetailSuratInfo extends Equatable {
       String? tempatTurun,
       String? arti,
       String? deskripsi,
-      String? audio,
+      AudioInfo? audioFull,
       bool? status,
       List<AyatInfo>? ayat}) {
     return DetailSuratInfo(
@@ -57,39 +57,71 @@ class DetailSuratInfo extends Equatable {
         tempatTurun: tempatTurun ?? this.tempatTurun,
         arti: arti ?? this.arti,
         deskripsi: deskripsi ?? this.deskripsi,
-        audio: audio ?? this.audio,
+        audioFull: audioFull ?? this.audioFull,
         status: status ?? this.status,
         ayat: ayat ?? this.ayat);
   }
 }
 
-class AyatInfo extends Equatable {
-  final int id;
-  final int surah;
-  final int nomor;
-  final String ar;
-  final String tr;
-  final String idn;
+class AudioInfo extends Equatable {
+  final String no1;
+  final String no2;
+  final String no3;
+  final String no4;
+  final String no5;
 
-  const AyatInfo(
-      {required this.id,
-      required this.surah,
-      required this.nomor,
-      required this.ar,
-      required this.tr,
-      required this.idn});
+  const AudioInfo(
+      {required this.no1,
+      required this.no2,
+      required this.no3,
+      required this.no4,
+      required this.no5});
 
   @override
-  List<Object> get props => [id, surah, nomor, ar, tr, idn];
+  List<Object> get props => [no1, no2, no3, no4, no5];
+
+  AudioInfo copyWith(
+      {String? no1, String? no2, String? no3, String? no4, String? no5}) {
+    return AudioInfo(
+        no1: no1 ?? this.no1,
+        no2: no2 ?? this.no2,
+        no3: no3 ?? this.no3,
+        no4: no4 ?? this.no4,
+        no5: no5 ?? this.no5);
+  }
+}
+
+class AyatInfo extends Equatable {
+  final int nomorAyat;
+  final String teksArab;
+  final String teksLatin;
+  final String teksIndonesia;
+  final AudioInfo audio;
+
+  const AyatInfo({
+    required this.nomorAyat,
+    required this.teksArab,
+    required this.teksLatin,
+    required this.teksIndonesia,
+    required this.audio,
+  });
+
+  @override
+  List<Object> get props =>
+      [nomorAyat, teksArab, teksLatin, teksIndonesia, audio];
 
   AyatInfo copyWith(
-      {int? id, int? surah, int? nomor, String? ar, String? tr, String? idn}) {
+      {int? nomorAyat,
+      String? teksArab,
+      String? teksLatin,
+      String? teksIndonesia,
+      AudioInfo? audio}) {
     return AyatInfo(
-        id: id ?? this.id,
-        surah: surah ?? this.surah,
-        nomor: nomor ?? this.nomor,
-        ar: ar ?? this.ar,
-        tr: tr ?? this.tr,
-        idn: idn ?? this.idn);
+      nomorAyat: nomorAyat ?? this.nomorAyat,
+      teksArab: teksArab ?? this.teksArab,
+      teksLatin: teksLatin ?? this.teksLatin,
+      teksIndonesia: teksIndonesia ?? this.teksIndonesia,
+      audio: audio ?? this.audio,
+    );
   }
 }

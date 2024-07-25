@@ -2,14 +2,25 @@ import 'package:e_quran/core/utils/color/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget ayatDetailCard(Size size, int surah, int nomor, String ar, String tr,
-    String idn, dynamic func, dynamic showModalTafsir) {
+Widget ayatDetailCard(
+  Size size,
+  int surah,
+  int nomor,
+  String ar,
+  String tr,
+  String idn,
+  dynamic func,
+  dynamic showModalTafsir,
+  bool isActive,
+) {
   return Container(
       width: size.width,
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: darkGrey),
+          border: isActive ? Border.all(width: 1, color: primaryColor) : null,
+          borderRadius: BorderRadius.circular(15),
+          color: darkGrey),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

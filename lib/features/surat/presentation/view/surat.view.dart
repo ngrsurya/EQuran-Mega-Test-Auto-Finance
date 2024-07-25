@@ -26,6 +26,7 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
 
   SuratController suratController = sl.get<SuratController>();
   final player = AudioPlayer();
+  late ScrollController _scrollController;
 
   @override
   initState() {
@@ -35,6 +36,14 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
 
     player.positionStream.listen((p) {
       suratController.setPositionStream(p);
+      int index = suratController.findIndexForCurrentDuration(p.inSeconds + .0);
+
+      if (index == suratController.currentIndexAudio.value) return;
+
+      if (index != -1) {
+        suratController.setCurrentIndexAudiPlayed(index);
+        scrollToCurrentIndex(index);
+      }
     });
 
     player.durationStream.listen((d) {
@@ -51,6 +60,8 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
         player.seek(suratController.position.value);
       }
     });
+
+    _scrollController = ScrollController();
   }
 
   @override
@@ -58,6 +69,8 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
     if (mounted) {
       disposePlayer();
     }
+    _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -72,8 +85,29 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
     }
   }
 
+  void scrollToCurrentIndex(int index) {
+    if (_scrollController.hasClients) {
+      // Calculate the scroll position based on item height
+      var itemHeight = 200.0; // Replace with your actual item height
+      final maxScrollExtent = _scrollController.position.maxScrollExtent;
+      final targetScrollPosition = index * itemHeight;
+
+      // Ensure that the target scroll position does not exceed maxScrollExtent
+      final scrollPosition = targetScrollPosition > maxScrollExtent
+          ? maxScrollExtent
+          : targetScrollPosition;
+
+      _scrollController.animateTo(
+        scrollPosition,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   void onBackPressed() {
     disposePlayer();
+    suratController.resetAll();
     Future.microtask(() => Navigator.pop(context));
   }
 
@@ -87,9 +121,22 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
     return Obx(() => suratController.detailSuratState.value ==
             DetailSuratState.loading
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
+        ? const Scaffold(
+            backgroundColor: black,
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "Please wait.. it might take a while",
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  )
+                ],
+              ),
             ),
           )
         : WillPopScope(
@@ -349,32 +396,36 @@ class _SuratViewState extends State<SuratView> with TickerProviderStateMixin {
                           //CONTENT
                           Expanded(
                               child: ListView(
+                            controller: _scrollController,
                             children: suratController
                                     .detailSuratInfo!.value.ayat.isNotEmpty
                                 ? suratController.detailSuratInfo!.value.ayat
                                     .asMap()
                                     .entries
                                     .map((entry) {
-                                    int index = entry.key + 1;
+                                    int index = entry.key;
                                     var ayat = entry.value;
                                     return ayatDetailCard(
                                         size,
-                                        ayat.surah,
-                                        ayat.nomor,
-                                        ayat.ar,
-                                        ayat.tr,
-                                        ayat.idn, () {
+                                        suratController
+                                            .detailSuratInfo!.value.nomor,
+                                        ayat.nomorAyat,
+                                        ayat.teksArab,
+                                        ayat.teksLatin,
+                                        ayat.teksIndonesia, () {
                                       suratController.handleSeek(
-                                          (index *
-                                              suratController
-                                                  .durationPerAyat.value),
+                                          suratController
+                                              .ayatDurationList[index],
                                           player);
                                     }, () {
                                       suratController.onSetCurrentTafsir(
                                           suratController.detailTarifnfo!.value
                                               .tafsir[entry.key]);
                                       suratController.onShowModalTafsir(true);
-                                    });
+                                    },
+                                        suratController
+                                                .currentIndexAudio.value ==
+                                            index);
                                   }).toList()
                                 : [],
                           ))

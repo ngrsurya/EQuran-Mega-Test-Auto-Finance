@@ -21,16 +21,26 @@ class GetDataDetailSurat implements UseCase<DetailSuratInfo, String> {
             tempatTurun: r.tempatTurun ?? '',
             arti: r.arti ?? '',
             deskripsi: r.deskripsi ?? '',
-            audio: r.audio ?? '',
+            audioFull: AudioInfo(
+                no1: r.audioFull!.no1 ?? '',
+                no2: r.audioFull!.no2 ?? '',
+                no3: r.audioFull!.no3 ?? '',
+                no4: r.audioFull!.no4 ?? '',
+                no5: r.audioFull!.no5 ?? ''),
             status: r.status ?? false,
             ayat: r.ayat!
                 .map((e) => AyatInfo(
-                    nomor: e.nomor ?? 0,
-                    id: e.id ?? 0,
-                    surah: e.surah ?? 0,
-                    ar: e.ar ?? '',
-                    tr: e.tr ?? '',
-                    idn: e.idn ?? ''))
+                      nomorAyat: e.nomorAyat ?? 0,
+                      teksArab: e.teksArab ?? '',
+                      teksLatin: e.teksLatin ?? '',
+                      teksIndonesia: e.teksIndonesia ?? '',
+                      audio: AudioInfo(
+                          no1: e.audio!.no1 ?? '',
+                          no2: e.audio!.no2 ?? '',
+                          no3: e.audio!.no3 ?? '',
+                          no4: e.audio!.no4 ?? '',
+                          no5: e.audio!.no5 ?? ''),
+                    ))
                 .toList())));
   }
 }

@@ -7,11 +7,6 @@ abstract class Routes {
 
 class RouterPage {
   static final routes = [
-    GetPage(name: Routes.home, page: () => HomeView()),
-    // GetPage(
-    //     name: Routes.add,
-    //     page: () => const AddView(
-    //           isContainHome: true,
-    //         )),
+    GetPage(name: Routes.home, page: () => const HomeView()),
   ];
 }

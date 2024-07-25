@@ -26,11 +26,11 @@ GetDaftarSuratResponseData _$GetDaftarSuratResponseDataFromJson(
     GetDaftarSuratResponseData(
       nomor: (json['nomor'] as num?)?.toInt(),
       nama: json['nama'] as String?,
-      namaLatin: json['name_latin'] as String?,
-      jumlahAyat: (json['jumlah_ayat'] as num?)?.toInt(),
+      namaLatin: json['namaLatin'] as String?,
+      jumlahAyat: (json['jumlahAyat'] as num?)?.toInt(),
       arti: json['arti'] as String?,
       deskripsi: json['deskripsi'] as String?,
-      tempatTurun: json['tempat_turun'] as String?,
+      tempatTurun: json['tempatTurun'] as String?,
     );
 
 Map<String, dynamic> _$GetDaftarSuratResponseDataToJson(
@@ -38,9 +38,9 @@ Map<String, dynamic> _$GetDaftarSuratResponseDataToJson(
     <String, dynamic>{
       'nomor': instance.nomor,
       'nama': instance.nama,
-      'name_latin': instance.namaLatin,
-      'jumlah_ayat': instance.jumlahAyat,
-      'tempat_turun': instance.tempatTurun,
+      'namaLatin': instance.namaLatin,
+      'jumlahAyat': instance.jumlahAyat,
+      'tempatTurun': instance.tempatTurun,
       'arti': instance.arti,
       'deskripsi': instance.deskripsi,
     };

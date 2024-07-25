@@ -18,7 +18,7 @@ class HomeDatasourceImpl extends HomeDatasource {
       // String merchantId = prefHelper.getMerchantId ?? '';
       Response response = await eQuranApi
           .get(true, null)
-          .then((value) => value.get(('${Endpoint('DEV').baseUrl}/surat'),
+          .then((value) => value.get(('${Endpoint('DEV').baseUrl}/v2/surat'),
               options: Options(
                 headers: {
                   "Accept": "application/json",
@@ -26,15 +26,8 @@ class HomeDatasourceImpl extends HomeDatasource {
                 },
               )));
 
-      List<GetDaftarSuratResponseData> daftarSuratList = (response.data as List)
-          .map((item) =>
-              GetDaftarSuratResponseData.fromJson(item as Map<String, dynamic>))
-          .toList();
-
-      GetDaftarSuratResponse daftarResponse =
-          GetDaftarSuratResponse(data: daftarSuratList);
-
-      return Future.value(Right(daftarResponse));
+      return Future.value(
+          Right(GetDaftarSuratResponse.fromJson(response.data)));
     } on DioError catch (e) {
       return Left(GlobalFailure(exception: e.message ?? ''));
     }

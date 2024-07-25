@@ -16,9 +16,8 @@ class SuratDatasourceImpl extends SuratDatasource {
   Future<Either<Failure, GetDetailSuratResponse>> postGetSuratDetail(
       String id) async {
     try {
-      Response response = await eQuranApi
-          .get(true, null)
-          .then((value) => value.get(('${Endpoint('DEV').baseUrl}/surat/$id'),
+      Response response = await eQuranApi.get(true, null).then(
+          (value) => value.get(('${Endpoint('DEV').baseUrl}/v2/surat/$id'),
               options: Options(
                 headers: {
                   "Accept": "application/json",
@@ -27,7 +26,7 @@ class SuratDatasourceImpl extends SuratDatasource {
               )));
 
       return Future.value(
-          Right(GetDetailSuratResponse.fromJson(response.data)));
+          Right(GetDetailSuratResponse.fromJson(response.data['data'])));
     } on DioError catch (e) {
       return Left(GlobalFailure(exception: e.message ?? ''));
     }

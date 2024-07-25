@@ -17,11 +17,11 @@ class GetDaftarSuratResponse {
 class GetDaftarSuratResponseData {
   int? nomor;
   String? nama;
-  @JsonKey(name: 'name_latin')
+  @JsonKey(name: 'namaLatin')
   String? namaLatin;
-  @JsonKey(name: 'jumlah_ayat')
+  @JsonKey(name: 'jumlahAyat')
   int? jumlahAyat;
-  @JsonKey(name: 'tempat_turun')
+  @JsonKey(name: 'tempatTurun')
   String? tempatTurun;
   String? arti;
   String? deskripsi;
